@@ -4,19 +4,47 @@ require "httparty"
 def view(template); erb template.to_sym; end
 
 get "/" do
-  ### Get the weather
-  # Evanston, Kellogg Global Hub... replace with a different location if you want
-  lat = 42.0574063
-  long = -87.6722787
+    # Benjamin Sanhueza's KIEI project
 
-  units = "imperial" # or metric, whatever you like
-  key = "YOUR-API-KEY-GOES-HERE" # replace this with your real OpenWeather API key
+    ### Get the weather
+    # Rapallo, Italy
+    lat = 44.347950
+    long = 9.233965
 
-  # construct the URL to get the API data (https://openweathermap.org/api/one-call-api)
-  url = "https://api.openweathermap.org/data/2.5/onecall?lat=#{lat}&lon=#{long}&units=#{units}&appid=#{key}"
+    units = "metric" # or metric, whatever you like
+    key_weather = "6b22a15f6b47182ed9894d808faa8b9a" # replace this with your real OpenWeather API key
+    exclude = "minutely,hourly"
 
-  # make the call
-  @forecast = HTTParty.get(url).parsed_response.to_hash
+    # construct the URL to get the API data (https://openweathermap.org/api/one-call-api)
+    url_weather = "https://api.openweathermap.org/data/2.5/onecall?lat=#{lat}&lon=#{long}&units=#{units}&exclude=#{exclude}&appid=#{key_weather}"
+    puts url_weather
 
-  ### Get the news
+    # make the call
+    @forecast = HTTParty.get(url_weather).parsed_response.to_hash
+
+    ### Get the news
+    # Italy
+    @country = "it"
+
+    key_news = "27a5e9aef4e14d9ea81ae4510796042c"
+    
+    # construct the URL to get the API data (https://openweathermap.org/api/one-call-api)
+    url_news = "https://newsapi.org/v2/top-headlines?country=#{@country}&apiKey=#{key_news}"
+
+    # make the call
+    @news = HTTParty.get(url_news).parsed_response.to_hash
+    @news_to_display = 12
+
+    # date
+    time = Time.new
+
+    wkday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
+    mon = ["January","February","March","April","May","June","July","August","September","October","November","December"]
+
+    @weekday = wkday[time.wday]
+    @month = mon[time.month]
+    @weeknum = time.day
+    @year = time.year
+
+    view 'news'
 end

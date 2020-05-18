@@ -7,7 +7,7 @@
 
     <!-- Google Fonts -->
     <!-- Swap out "Roboto" for the font(s) you want to use -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" crossorigin="anonymous">
@@ -18,12 +18,52 @@
     <!-- Your own CSS -->
     <link rel="stylesheet" href="/styles.css">
 
-    <title>News</title>
+    <title>News from <%= @country.upcase %> </title>
   </head>
   <body>
 
     <div class="container mt-5">
-      <h1>News</h1>
+      <h1>News from <%= @country.upcase %> </h1>
+      <h2> <%= @weekday %>, <%= @weeknum %> of <%= @month %> of <%= @year %> </h2>
+    </div>
+
+    <br> 
+
+    <!-- News Containers-->
+    <div class="container">
+        <div class="row md-4">
+            <% for i in 0..@news_to_display-1 %>
+                <div class="col-md text-center">
+                    <div class="card" style="width: 18rem;">
+                        <img src= <%= @news["articles"][i]["urlToImage"] %> class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h3 class="card-title"><%= @news["articles"][i]["title"] %></h3>
+                            <p class="card-text"><%= @news["articles"][i]["description"] %></p>
+                        </div>
+                        <div class="card-body">
+                            <a href=<%= @news["articles"][i]["url"] %> target="_blank" class="card-link">Link</a>
+                        </div>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+        <div class="row md-4">
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <hr class="my-4">
+    <div class="container footer">
+          <ul class="list-unstyled">
+              <li><h4>Weather Forecast for Today - <%= @weekday %>, <%= @weeknum %> of <%= @month %> of <%= @year %>:</h4></li>
+              <li>Current: <%= @forecast["current"]["weather"][0]["main"] %>, <%= @forecast["current"]["temp"].round() %> degrees. </li>
+              <li>Tomorrow: <%= @forecast["daily"][1]["weather"][0]["main"] %>, <%= @forecast["daily"][1]["temp"]["day"].round() %> degrees.</li>
+          </ul> 
+      </div>
     </div>
 
     <!-- Optional JavaScript -->

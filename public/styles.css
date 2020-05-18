@@ -1,0 +1,25 @@
+h1,h3 {
+    font-family: 'Poppins', normal;
+    color: rebeccapurple;
+    font-weight: bold;
+}
+
+h2,h4 {
+    color: gray;
+}
+
+h3 {
+    font-size: 20px;
+}
+
+p {
+    font-size: 12px;
+}
+
+h4 {
+    font-weight: bold
+}
+
+.card-body {
+    background-color: aliceblue;
+}
