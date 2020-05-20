@@ -24,7 +24,7 @@
 
     <div class="container mt-5">
       <h1>News from <%= @country.upcase %> </h1>
-      <h2> <%= @weekday %>, <%= @weeknum %> of <%= @month %> of <%= @year %> </h2>
+      <h2> <%= @weekday[0] %>, <%= @daynum[0] %> of <%= @month[0] %> of <%= @year[0] %> </h2>
     </div>
 
     <br> 
@@ -59,9 +59,18 @@
     <hr class="my-4">
     <div class="container footer">
           <ul class="list-unstyled">
-              <li><h4>Weather Forecast for Today - <%= @weekday %>, <%= @weeknum %> of <%= @month %> of <%= @year %>:</h4></li>
-              <li>Current: <%= @forecast["current"]["weather"][0]["main"] %>, <%= @forecast["current"]["temp"].round() %> degrees. </li>
-              <li>Tomorrow: <%= @forecast["daily"][1]["weather"][0]["main"] %>, <%= @forecast["daily"][1]["temp"]["day"].round() %> degrees.</li>
+              <li><h4>Weather Forecast</h4></li>
+              <% for i in 0..3 %>
+                <li> 
+                    <% if i==0 then %>Current: <% end %>
+                    <%= @weekday[i] %>, <%= @daynum[i] %> of <%= @month[i] %> of <%= @year[i] %> -
+                    <% if i==0 then %>
+                        <%= @forecast["current"]["weather"][0]["main"] %>, <%= @forecast["current"]["temp"].round() %> degrees.
+                    <% else %>
+                        <%= @forecast["daily"][i]["weather"][0]["main"] %>, <%= @forecast["daily"][i]["temp"]["day"].round() %> degrees.
+                    <% end %>
+                </li>
+              <% end %>
           </ul> 
       </div>
     </div>

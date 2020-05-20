@@ -37,14 +37,17 @@ get "/" do
 
     # date
     time = Time.new
+    tomorrow = time + 86400
+    dayafter = time + 2*86400
+    dayafter2 = time + 3*86400
 
     wkday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
     mon = ["January","February","March","April","May","June","July","August","September","October","November","December"]
 
-    @weekday = wkday[time.wday]
-    @month = mon[time.month]
-    @weeknum = time.day
-    @year = time.year
+    @weekday = [wkday[time.wday], wkday[tomorrow.wday], wkday[dayafter.wday], wkday[dayafter2.wday]]
+    @month = [mon[time.month], mon[tomorrow.month], mon[dayafter.month], mon[dayafter2.month]]
+    @daynum = [time.day, tomorrow.day, dayafter.day, dayafter2.day]
+    @year = [time.year, tomorrow.year, dayafter.year, dayafter2.year]
 
     view 'news'
 end
